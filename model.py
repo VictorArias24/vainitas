@@ -21,7 +21,7 @@ Para llegar a este punto hemos:
 - dentro de /train 7 tipo 0 y 24 tipo 1
 - dentro de /test 3 tipo 0 y 5 tipo 1
 
-Tenemos así solamente 31 casos para entrenamiento y 8 para validación
+Tenemos así solamente 30 casos para entrenamiento y 8 para validación
 
 Esta es la estructura de los directorio, en resumen:
 ```
@@ -113,11 +113,11 @@ def train_top_model():
     train_data = np.load('/home/oscar/Documents/vainitas/bottleneck_features_train.npy')
     train_labels = np.array(
         [0] * (nb_train_samples // 2) + [1] * (nb_train_samples // 2))
-
+        #[0] * (train_data.shape[0] // 2) + [1] * (train_data.shape[0] // 2))
     validation_data = np.load('/home/oscar/Documents/vainitas/bottleneck_features_validation.npy')
     validation_labels = np.array(
         [0] * (nb_validation_samples // 2) + [1] * (nb_validation_samples // 2))
-
+        #[0] * (validation_data.shape[0] // 2) + [1] * (validation_data.shape[0] // 2))
     model = Sequential()
     model.add(Flatten(input_shape=train_data.shape[1:]))
     model.add(Dense(256, activation='relu'))
