@@ -63,8 +63,8 @@ train_data_dir = '/home/oscar/Documents/vainitas/train'
 # dónde están los de validación/test
 validation_data_dir = '/home/oscar/Documents/vainitas/test'
 ## Esto toca cuadrarlo para que coincidan con los lotes
-nb_train_samples = 248 
-nb_validation_samples = 96
+nb_train_samples = 400 
+nb_validation_samples = 200
 epochs = 10
 batch_size = 8
 #%%
@@ -94,8 +94,8 @@ def save_bottlebeck_features():
         class_mode=None,
         shuffle=False)
     bottleneck_features_train = model.predict_generator(
-        generator, nb_train_samples // batch_size)
-    np.save('/home/oscar/Documents/vainitas/bottleneck_features_train',
+        generator, nb_train_samples // batch_size, workers = 4, use_multiprocessing=True, verbose=1)
+    np.save('/home/oscar/Documents/vainitas/bottleneck_features_train.npy',
             bottleneck_features_train)
 
     generator = datagen.flow_from_directory(
@@ -105,8 +105,8 @@ def save_bottlebeck_features():
         class_mode=None,
         shuffle=False)
     bottleneck_features_validation = model.predict_generator(
-        generator, nb_validation_samples // batch_size)
-    np.save('/home/oscar/Documents/vainitas/bottleneck_features_validation',
+        generator, nb_validation_samples // batch_size, workers = 4, use_multiprocessing=True, verbose=1)
+    np.save('/home/oscar/Documents/vainitas/bottleneck_features_validation.npy',
             bottleneck_features_validation)
 #%%
 def train_top_model():
